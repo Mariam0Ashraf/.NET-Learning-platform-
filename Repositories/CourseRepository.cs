@@ -17,9 +17,11 @@ namespace LearningPlatform.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Course?>> GetAllCoursesAsync()
+        public async Task<List<Course>> GetAllCoursesAsync()
         {
-            return await _context.Courses.ToListAsync();
+            return await _context.Courses
+                .Include(c => c.Teacher) 
+                .ToListAsync();
         }
         public async Task<List<Course>> GetCoursesByTeacherIdAsync(int teacherId)
         {
