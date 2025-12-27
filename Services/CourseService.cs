@@ -66,5 +66,20 @@ namespace LearningPlatform.Services
                 TeacherName = c.Teacher != null ? c.Teacher.Username : "Unknown"
             }).ToList();
         }
+        public async Task<CourseResponseDto?> GetCourseByIdAsync(int id)
+        {
+            var course = await _courseRepository.GetCourseByIdAsync(id);
+
+            if (course == null) return null; 
+
+            return new CourseResponseDto
+            {
+                Id = course.Id,
+                Title = course.Title,
+                Description = course.Description,
+                Price = course.Price,
+                TeacherName = course.Teacher != null ? course.Teacher.Username : "Unknown"
+            };
+        }
     }
 }

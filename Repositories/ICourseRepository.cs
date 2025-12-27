@@ -8,5 +8,6 @@ namespace LearningPlatform.Repositories
         Task<List<Course?>> GetAllCoursesAsync();
         Task<List<Course>> GetCoursesByTeacherIdAsync(int teacherId);
         Task<List<Course>> SearchCoursesAsync(string searchTerm);
+        Task<Course?> GetCourseByIdAsync(int id);
     }
 }
