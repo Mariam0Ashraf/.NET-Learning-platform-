@@ -35,7 +35,7 @@ namespace LearningPlatform.Controllers
 
             if (result != "Success")
             {
-                return BadRequest(result); // Returns "Already in cart"
+                return BadRequest(result); 
             }
 
             return Ok("Course added to cart!");

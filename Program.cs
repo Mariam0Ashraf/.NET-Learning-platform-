@@ -42,7 +42,8 @@ builder.Services.AddScoped<CourseService>();
 builder.Services.AddTransient<IEmailService, EmailService>();
 builder.Services.AddScoped<ICartRepository,CartRepository>();
 builder.Services.AddScoped<CartService>();
-
+builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
+builder.Services.AddScoped<ReviewService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
