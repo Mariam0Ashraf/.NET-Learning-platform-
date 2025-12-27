@@ -21,5 +21,11 @@ namespace LearningPlatform.Repositories
         {
             return await _context.Courses.ToListAsync();
         }
+        public async Task<List<Course>> GetCoursesByTeacherIdAsync(int teacherId)
+        {
+            return await _context.Courses
+                .Where(c => c.TeacherId == teacherId) 
+                .ToListAsync();
+        }
     }
 }

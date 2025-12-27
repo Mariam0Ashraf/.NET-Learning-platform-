@@ -1,4 +1,5 @@
-﻿using LearningPlatform.Repositories;
+﻿using LearningPlatform.DTOs;
+using LearningPlatform.Repositories;
 using LearningPlatform.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -38,6 +39,30 @@ namespace LearningPlatform.Controllers
 
             await _courseService.AddCourseAsync(request, teacher.Id);
             return Ok("Course added successfully!");
+        }
+        [HttpGet("my-courses")]
+        [Authorize(Roles = "Teacher")]
+        public async Task<IActionResult> GetMyCourses()
+        {
+            var email = User.FindFirst(ClaimTypes.Email)?.Value;
+            if (string.IsNullOrEmpty(email)) return Unauthorized();
+
+            var teacher = await _userRepository.GetUserByEmailAsync(email);
+            if (teacher == null) return Unauthorized();
+
+            var courses = await _courseService.GetCoursesForTeacherAsync(teacher.Id);
+
+            // --- NEW MAPPING LOGIC ---
+            // Convert the "Dangerous" Entity to the "Safe" DTO
+            var response = courses.Select(c => new CourseResponseDto
+            {
+                Id = c.Id,
+                Title = c.Title,
+                Description = c.Description,
+                Price = c.Price
+            }).ToList();
+
+            return Ok(response); // Return the clean list
         }
     }
 }

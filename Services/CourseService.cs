@@ -1,4 +1,5 @@
 ﻿using LearningPlatform.DTOs;
+using LearningPlatform.Models;
 using LearningPlatform.Repositories;
 
 namespace LearningPlatform.Services
@@ -20,6 +21,10 @@ namespace LearningPlatform.Services
                 Price = request.Price
             };
             await _courseRepository.AddCourseAsync(course);
+        }
+        public async Task<List<Course>> GetCoursesForTeacherAsync(int teacherId)
+        {
+            return await _courseRepository.GetCoursesByTeacherIdAsync(teacherId);
         }
     }
 }
