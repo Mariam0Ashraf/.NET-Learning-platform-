@@ -52,5 +52,19 @@ namespace LearningPlatform.Services
                 TeacherName = c.Teacher != null ? c.Teacher.Username : "Unknown"
             }).ToList();
         }
+        public async Task<List<CourseResponseDto>> SearchCoursesAsync(string searchTerm)
+        {
+            var courses = await _courseRepository.SearchCoursesAsync(searchTerm);
+
+            // Map to DTO
+            return courses.Select(c => new CourseResponseDto
+            {
+                Id = c.Id,
+                Title = c.Title,
+                Description = c.Description,
+                Price = c.Price,
+                TeacherName = c.Teacher != null ? c.Teacher.Username : "Unknown"
+            }).ToList();
+        }
     }
 }

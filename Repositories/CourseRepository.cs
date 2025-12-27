@@ -29,5 +29,12 @@ namespace LearningPlatform.Repositories
                 .Where(c => c.TeacherId == teacherId) 
                 .ToListAsync();
         }
+        public async Task<List<Course>> SearchCoursesAsync(string searchTerm)
+        {
+            return await _context.Courses
+                .Include(c => c.Teacher) // Don't forget to include the teacher!
+                .Where(c => c.Title.Contains(searchTerm)) // Finds any title containing the text
+                .ToListAsync();
+        }
     }
 }

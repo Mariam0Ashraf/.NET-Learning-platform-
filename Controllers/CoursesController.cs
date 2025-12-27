@@ -57,5 +57,26 @@ namespace LearningPlatform.Controllers
 
             return Ok(response);
         }
+        [HttpGet("search")]
+        [Authorize] // Any logged-in user (Student or Teacher) can search
+        public async Task<IActionResult> Search([FromQuery] string q)
+        {
+            // 1. Validate input
+            if (string.IsNullOrWhiteSpace(q))
+            {
+                return BadRequest("Search term cannot be empty.");
+            }
+
+            // 2. Call service
+            var response = await _courseService.SearchCoursesAsync(q);
+
+            // 3. Optional: Return 404 if nothing found, or just an empty list (Empty list is standard)
+            if (response.Count == 0)
+            {
+                return Ok("No courses found matching that name."); // Or just return Ok(response);
+            }
+
+            return Ok(response);
+        }
     }
 }
