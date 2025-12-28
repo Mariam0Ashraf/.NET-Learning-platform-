@@ -46,6 +46,7 @@ builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 builder.Services.AddScoped<ReviewService>();
 builder.Services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
 builder.Services.AddScoped<PaymentService>();
+builder.Services.AddScoped<EnrollmentService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
