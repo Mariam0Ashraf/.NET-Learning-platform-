@@ -14,8 +14,19 @@ namespace LearningPlatform.Data
         public DbSet<Course> Courses { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<Enrollment> Enrollments { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Enrollment>()
+                .HasOne(e => e.User)
+                .WithMany()
+                .HasForeignKey(e => e.UserId)
+                .OnDelete(DeleteBehavior.NoAction); // Stops the cycle
+
+            // Fix the decimal warning for AmountPaid
+            modelBuilder.Entity<Enrollment>()
+                .Property(e => e.AmountPaid)
+                .HasColumnType("decimal(18,2)");
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Review>()
                 .HasOne(r => r.User)

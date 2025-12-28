@@ -32,5 +32,11 @@ namespace LearningPlatform.Repositories
             return await _context.CartItems
                 .FirstOrDefaultAsync(c => c.UserId == userId && c.CourseId == courseId);
         }
+        public async Task ClearCartAsync(int userId)
+        {
+            var items = _context.CartItems.Where(c => c.UserId == userId);
+            _context.CartItems.RemoveRange(items);
+            await _context.SaveChangesAsync();
+        }
     }
 }

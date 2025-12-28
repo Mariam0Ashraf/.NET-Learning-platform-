@@ -6,6 +6,7 @@ namespace LearningPlatform.Repositories
     {
         Task AddToCartAsync(CartItem item);
         Task<List<CartItem>> GetCartItemsByUserIdAsync(int userId);
-        Task<CartItem?> GetCartItemAsync(int userId, int courseId); 
+        Task<CartItem?> GetCartItemAsync(int userId, int courseId);
+        Task ClearCartAsync(int userId);
     }
 }
